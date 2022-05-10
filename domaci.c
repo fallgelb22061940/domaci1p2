@@ -63,54 +63,26 @@ void ispis_matrice(int **matrica, int x, int y)
         }
     }
 }
-void nova_matrica(int **matrica, int x, int y, char *smer)
-{
-    int k;
+void nova_matrica (int **nova, int x, int y, char *smer, int **stara){
     int i, j;
-    if (strcmp(smer, "left") == 0)
-    {
-        for (i = 0; i < y; i++)
-        {
-            k = 0; // slobodno polje
-            for (j = 0; j < x; j++)
-            {
-                if (matrica[i][j] > 0)
-                {
-                    matrica[i][k] = matrica[i][j];
-                    if (k != j)
-                    {
-                        matrica[i][j] = 0;
-                    }
-                    if (matrica[i][k] == matrica[i][k - 1] && k > 0)
-                    {
-                        matrica[i][k - 1] = matrica[i][k - 1] * 2;
-                        matrica[i][k] = 0;
-                    }
-                    k++;
+    if (strcmp(smer, "left") == 0){
+        for (i= 0; i <y;i++){
+            int brojac = 0;
+            for (j = 0; j < x; j++){
+                if (stara[i][j] != 0){
+                    nova[i][brojac] = stara[i][j];
+                    brojac++;
                 }
             }
         }
     }
-    if (strcmp(smer, "right") == 0)
-    {
-        for (i = 0; i < y; i++)
-        {
-            k = x;
-            for (j = x; j > 0; j--)
-            {
-                if (matrica[i][j] > 0)
-                {
-                    matrica[i][k] = matrica[i][j];
-                    if (k != j)
-                    {
-                        matrica[i][j] = 0;
-                    }
-                    if (matrica[i][k] == matrica[i][k + 1] && k < x)
-                    {
-                        matrica[i][k + 1] = matrica[i][k + 1] * 2;
-                        matrica[i][k] = 0;
-                    }
-                    k--;
+    if (strcmp(smer, "right") == 0){
+        for (i = 0; i <y; i++){
+            int brojac = x-1;
+            for (j = x-1; j >= 0; j--){
+                if (stara[i][j]!=0){
+                    nova[i][brojac] = stara[i][j];
+                    brojac--;
                 }
             }
         }
@@ -133,10 +105,15 @@ int main()
         {
             smer = malloc(6);
             scanf("%s", smer);
+            int **matrica1 = (int **)malloc(visina * sizeof(int *));
+            for (i = 0; i < visina; i++)
+            {
+                matrica1[i] = (int *)malloc(sirina * sizeof(int));
+            }
             ispis_matrice(matrica, sirina, visina);
             printf("\n");
-            nova_matrica(matrica, sirina, visina, smer);
-            ispis_matrice(matrica, sirina, visina);
+            nova_matrica(matrica1, sirina, visina, smer, matrica);
+            ispis_matrice(matrica1, sirina, visina);
         }
     }
     return 0;
