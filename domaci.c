@@ -63,24 +63,51 @@ void ispis_matrice(int **matrica, int x, int y)
         }
     }
 }
-void nova_matrica (int **nova, int x, int y, char *smer, int **stara){
+void nova_matrica(int **nova, int x, int y, char *smer, int **stara)
+{
     int i, j;
-    if (strcmp(smer, "left") == 0){
-        for (i= 0; i <y;i++){
+    if (strcmp(smer, "left") == 0)
+    {
+        for (i = 0; i < y; i++)
+        {
             int brojac = 0;
-            for (j = 0; j < x; j++){
-                if (stara[i][j] != 0){
+            for (j = 0; j < x; j++)
+            {
+                if (stara[i][j] != 0)
+                {
                     nova[i][brojac] = stara[i][j];
+                    if (brojac != 0 && nova[i][brojac] == nova[i][brojac - 1])
+                    {
+                        nova[i][brojac - 1] = nova[i][brojac - 1] * 2;
+                        nova[i][brojac] = 0;
+                    }
+                    brojac++;
+                }
+            }
+            brojac = 0;
+            for (j = 0; j < x; j++)
+            {
+                if (nova[i][j] != 0)
+                {
+                    nova[i][brojac] = nova[i][j];
+                    if (j > brojac)
+                    {
+                        nova[i][j] = 0;
+                    }
                     brojac++;
                 }
             }
         }
     }
-    if (strcmp(smer, "right") == 0){
-        for (i = 0; i <y; i++){
-            int brojac = x-1;
-            for (j = x-1; j >= 0; j--){
-                if (stara[i][j]!=0){
+    if (strcmp(smer, "right") == 0)
+    {
+        for (i = 0; i < y; i++)
+        {
+            int brojac = x - 1;
+            for (j = x - 1; j >= 0; j--)
+            {
+                if (stara[i][j] != 0)
+                {
                     nova[i][brojac] = stara[i][j];
                     brojac--;
                 }
@@ -114,7 +141,18 @@ int main()
             printf("\n");
             nova_matrica(matrica1, sirina, visina, smer, matrica);
             ispis_matrice(matrica1, sirina, visina);
+            for (i = 0; i < visina; i++)
+            {
+                free(matrica1[i]);
+            }
+            free(matrica1);
+            free(smer);
         }
+        for (i = 0; i < visina; i++)
+        {
+            free(matrica[i]);
+        }
+        free(matrica);
     }
     return 0;
 }
