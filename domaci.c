@@ -109,6 +109,24 @@ void nova_matrica(int **nova, int x, int y, char *smer, int **stara)
                 if (stara[i][j] != 0)
                 {
                     nova[i][brojac] = stara[i][j];
+                    if (brojac != x - 1 && nova[i][brojac] == nova[i][brojac + 1])
+                    {
+                        nova[i][brojac + 1] = nova[i][brojac + 1] * 2;
+                        nova[i][brojac] = 0;
+                    }
+                    brojac--;
+                }
+            }
+            brojac = x-1;
+            for (j = x - 1; j >= 0; j--)
+            {
+                if (nova[i][j] != 0)
+                {
+                    nova[i][brojac] = nova[i][j];
+                    if (j < brojac)
+                    {
+                        nova[i][j] = 0;
+                    }
                     brojac--;
                 }
             }
